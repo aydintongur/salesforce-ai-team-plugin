@@ -5,18 +5,19 @@ A full Salesforce delivery team as Claude Code subagents. Give it a task, and it
 ## What you can ask it to do
 
 ```
-sf-admin'e söyle, Car__c'ye Sale_Price adında bir Currency alanı eklesin.
+Tell sf-admin to add a Currency field named Sale_Price to Car__c.
 ```
 Routes straight to `sf-admin` — no ceremony, it builds and deploys the field.
 
 ```
-Şu case study'yi tam ekiple çöz: Car ve Promotion arasında many-to-many
-ilişki kur, gerekli otomasyonu ekle, ve mevcut flow'ları denetle.
+Solve this case study with the full team: build a many-to-many relationship
+between Car and Promotion, add the required automation, and audit the
+existing flows.
 ```
 No specific role named → Business Analyst clarifies requirements, Architect decides the data model (and explains what it rejected and why), Admin builds it, Release Manager verifies and writes the final report.
 
 ```
-sf-qa-adversarial'a söyle, az önce kurduğum otomasyonu kırmaya çalışsın.
+Tell sf-qa-adversarial to try to break the automation I just built.
 ```
 Deliberately stress-tests what was just built — bulk inserts, edge cases, negative values — before you consider it done.
 

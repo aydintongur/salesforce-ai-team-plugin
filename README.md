@@ -1,14 +1,36 @@
 # salesforce-ai-team
 
-A full Salesforce delivery team as Claude Code subagents. Give it a task, and route it to one role for something small (`sf-admin`, "add a field") or the full pipeline for something bigger (`sf-business-analyst` → `sf-architect` → `sf-admin`/`sf-developer` → `sf-qa-adversarial` → `sf-release-manager`).
+A full Salesforce delivery team as Claude Code subagents. Give it a task, and it routes to one role for something small, or the full pipeline for something bigger.
 
-## Prerequisites
+## What you can ask it to do
+
+```
+sf-admin'e söyle, Car__c'ye Sale_Price adında bir Currency alanı eklesin.
+```
+Routes straight to `sf-admin` — no ceremony, it builds and deploys the field.
+
+```
+Şu case study'yi tam ekiple çöz: Car ve Promotion arasında many-to-many
+ilişki kur, gerekli otomasyonu ekle, ve mevcut flow'ları denetle.
+```
+No specific role named → Business Analyst clarifies requirements, Architect decides the data model (and explains what it rejected and why), Admin builds it, Release Manager verifies and writes the final report.
+
+```
+sf-qa-adversarial'a söyle, az önce kurduğum otomasyonu kırmaya çalışsın.
+```
+Deliberately stress-tests what was just built — bulk inserts, edge cases, negative values — before you consider it done.
+
+## Requirements
 
 - [Claude Code](https://code.claude.com) installed
 - [Salesforce CLI](https://developer.salesforce.com/tools/salesforcecli) (`sf`) installed
-- A Salesforce org authenticated locally: `sf org login web --alias <your-alias>`
+- A Salesforce org authenticated locally:
+  ```bash
+  sf org login web --alias my-org
+  sf config set target-org=my-org
+  ```
 
-These agents call `sf` directly via Bash — they are not a hosted service, they run against whatever org you've authenticated locally.
+These agents call `sf` directly via Bash — they are not a hosted service, they run against whatever org you've authenticated locally. Point them at a Developer Edition or sandbox org while you're getting a feel for them; they make real changes, not simulations.
 
 ## Install
 
@@ -22,6 +44,8 @@ Or for local testing:
 ```bash
 claude --plugin-dir /path/to/this/plugin
 ```
+
+**After installing, restart your Claude Code session** — newly added subagents aren't picked up mid-session, only on a fresh start. If you ask for a role by name and get "Agent type not found," this is almost always why.
 
 Full project (case studies, MCP server, daily health-check job): [github.com/aydintongur/salesforce-ai-team](https://github.com/aydintongur/salesforce-ai-team)
 
@@ -43,6 +67,16 @@ Full project (case studies, MCP server, daily health-check job): [github.com/ayd
 | `sf-org-explainer` | Architecture overview of an org you've just inherited |
 | `sf-release-manager` | Deploy readiness, final delivery report, rollback, changelog |
 
+## Troubleshooting
+
+**"Agent type not found: sf-xyz"** — restart your Claude Code session. New/updated subagents in `.claude/agents/` only load at session start, not mid-conversation.
+
+**A deploy fails with "This schedulable class has jobs pending or in progress"** — you're redeploying an Apex class tied to a currently-scheduled job. Abort it first (`System.schedule`'s Id, via `System.abortJob('<id>')` in Execute Anonymous), redeploy, then reschedule.
+
+**A field you just created "doesn't exist" in Apex or reports** — Metadata/Tooling API field creation doesn't grant field-level security automatically the way the Setup UI wizard does. Grant FLS to the relevant profile/permission set as an explicit next step — `sf-admin` knows to do this, but if you're working around it directly, this is the fix.
+
+**Deploying a change to an existing custom object fails oddly around relationships** — check whether the object is a master-detail child (e.g. rolls up to Account). Granting access or making certain changes to a master-detail child can require the parent object's permissions to already be in place.
+
 ## A note on scope
 
-Each role deploys real metadata and can run real Apex against whatever org your local `sf` CLI is authenticated to. Point it at a Developer Edition or sandbox org while you're getting a feel for it — these agents make real changes, not simulations.
+Each role deploys real metadata and can run real Apex against whatever org your local `sf` CLI is authenticated to. These agents make real changes — review what they propose if you're working against anything other than a disposable practice org.

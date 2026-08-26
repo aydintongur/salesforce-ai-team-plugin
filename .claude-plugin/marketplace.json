@@ -7,7 +7,7 @@
     {
       "name": "salesforce-ai-team",
       "source": "./",
-      "description": "A full Salesforce delivery team as Claude Code subagents (BA, Architect, Admin, Developer, Release Manager, QA, Security, Access Audit, Data Quality, Impact Analysis, Org Parity, Org Docs, Test Data)."
+      "description": "A full Salesforce delivery team as Claude Code subagents (BA, Architect, Admin, Developer, Release Manager, QA, Security, Access Audit, Data Quality, Impact Analysis, Org Parity, Org Docs, Test Data, Practice Scenarios)."
     }
   ]
 }

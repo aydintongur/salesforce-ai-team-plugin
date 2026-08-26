@@ -21,6 +21,12 @@ Tell sf-qa-adversarial to try to break the automation I just built.
 ```
 Deliberately stress-tests what was just built — bulk inserts, edge cases, negative values — before you consider it done.
 
+```
+Tell sf-practice-generator to seed a certification practice scenario for Apex
+trigger bulkification.
+```
+Plants a small, self-contained object with a real, verified bug for you to find and fix yourself — then ask `sf-practice-grader` to check your work against the live org once you're done.
+
 ## Requirements
 
 - [Claude Code](https://code.claude.com) installed
@@ -67,6 +73,8 @@ Full project (case studies, MCP server, daily health-check job): [github.com/ayd
 | `sf-parity-checker` | Drift between two orgs (e.g. sandbox vs production) — needs two authenticated org aliases |
 | `sf-org-explainer` | Architecture overview of an org you've just inherited |
 | `sf-release-manager` | Deploy readiness, final delivery report, rollback, changelog |
+| `sf-practice-generator` | Seeds a self-contained certification/interview practice scenario with deliberately planted, verified-real bugs |
+| `sf-practice-grader` | Scores a practice attempt by re-checking the live org state against the scenario's answer key |
 
 ## Troubleshooting
 

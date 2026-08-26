@@ -1,7 +1,7 @@
 {
   "name": "salesforce-ai-team",
-  "description": "A full Salesforce delivery team as Claude Code subagents — Business Analyst, Architect, Admin, Developer, Release Manager, plus specialist roles for QA, security, access auditing, data quality, impact analysis, org parity checking, org documentation, and synthetic test data. Each role builds and verifies real changes against a connected Salesforce org via the Salesforce CLI.",
-  "version": "0.1.0",
+  "description": "A full Salesforce delivery team as Claude Code subagents — Business Analyst, Architect, Admin, Developer, Release Manager, plus specialist roles for QA, security, access auditing, data quality, impact analysis, org parity checking, org documentation, synthetic test data, and certification/interview practice scenarios. Each role builds and verifies real changes against a connected Salesforce org via the Salesforce CLI.",
+  "version": "0.2.0",
   "author": {
     "name": "Aydın Töngür"
   },

@@ -13,15 +13,17 @@ These agents call `sf` directly via Bash — they are not a hosted service, they
 ## Install
 
 ```bash
-/plugin marketplace add <this-repo>
+/plugin marketplace add aydintongur/salesforce-ai-team-plugin
 /plugin install salesforce-ai-team@salesforce-ai-team-marketplace
 ```
 
-Or for local testing before publishing:
+Or for local testing:
 
 ```bash
 claude --plugin-dir /path/to/this/plugin
 ```
+
+Full project (case studies, MCP server, daily health-check job): [github.com/aydintongur/salesforce-ai-team](https://github.com/aydintongur/salesforce-ai-team)
 
 ## Roles included
 
